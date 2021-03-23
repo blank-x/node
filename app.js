@@ -4,7 +4,7 @@ const Router = require('koa-router')
 const koaBody = require('koa-body');
 const {ProductModel} = require('./db.js')
 var router = new Router() 
-
+router.prefix('/payment')
 router.get('/home',async function(ctx,next){
     let result = await ProductModel.find()
     ctx.body = result
