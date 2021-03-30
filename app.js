@@ -47,6 +47,23 @@ router.post('/testAjax',async function(ctx,next){
     })
     ctx.body = 'testAjax'
 })
+
+router.get('/testAjaxError',async function(ctx,next){
+    await new Promise((resolve,reject)=>{
+        setTimeout(function(){
+            resolve()
+        },3000)
+    })
+    ctx.status = 500
+    ctx.body = 'testAjax'
+})
+
+router.post('/errlog',function(ctx,next){
+    console.log(ctx.request.body.url);
+    console.log(ctx.request.body);
+
+    ctx.body = ctx.request.body
+})
 app.use(cors());
 // multipart 支持formdata
 app.use(koaBody({multipart: true}));
