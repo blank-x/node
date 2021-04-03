@@ -2,10 +2,19 @@ const Koa = require('koa')
 const app = new Koa()
 const Router = require('koa-router')
 const koaBody = require('koa-body');
+const fs = require('fs')
+const fsPromises = fs.promises;
+const views = require('koa-views')
+
+const path = require('path')
 const cors = require('@koa/cors');
 const {ProductModel} = require('./db.js')
-var router = new Router() 
+var router = new Router()
 router.prefix('/payment')
+require('./weibo-sche')
+app.use(views(path.join(__dirname, './views'), {
+  extension: 'ejs'
+}))
 router.get('/home',async function(ctx,next){
     let result = await ProductModel.find()
     ctx.body = result
@@ -19,12 +28,12 @@ router.get('/',async function(ctx,next){
 router.post('/submit',async function(ctx,next){
     const productName = ctx.request.body.name
     // ProductModel.create({name:productName},function(){
-    //     ctx.body = 
+    //     ctx.body =
     // })
     const res = await ProductModel.create({name:productName})
 
     ctx.body = res
-    
+
 })
 
 router.get('/testAjax',async function(ctx,next){
@@ -58,12 +67,23 @@ router.get('/testAjaxError',async function(ctx,next){
     ctx.body = 'testAjax'
 })
 
-router.post('/errlog',function(ctx,next){
-    console.log(ctx.request.body.url);
-    console.log(ctx.request.body);
+const file = path.resolve(__dirname,'hotSearch.json')
+router.get('/weiboHot',async function(ctx,next){
 
-    ctx.body = ctx.request.body
+    const res =  await fsPromises.readFile(file)
+    await ctx.render('weibohot', {
+      list:JSON.parse(res.toString())
+    })
 })
+
+router.post('/errlog',function(ctx,next){
+  console.log(ctx.request.body.url);
+  console.log(ctx.request.body);
+
+  ctx.body = ctx.request.body
+})
+
+
 app.use(cors());
 // multipart 支持formdata
 app.use(koaBody({multipart: true}));

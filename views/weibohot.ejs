@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<div>
+  <h1>微博热搜榜，1分钟更新一次</h1>
+  <ul>
+    <% list.forEach(function(item,index){ %>
+      <li>
+          <a href="<%= item.link%>" target="_blank"> <%= item.text%> </a>
+          <%= item.hotValue%>
+      </li>
+    <% }); %>
+
+  </ul>
+</div>
+</body>
+</html>
