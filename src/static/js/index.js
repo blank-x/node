@@ -11,7 +11,7 @@ window.onload = function () {
   // 点击graphQL一次获取所有数据，问你怕不怕？
   $('#btn3').click(function() {
     $.ajax({
-      url: '/graphql',
+      url: '/n/graphql',
       data: {
         query: `query {
           getCourse{
@@ -79,7 +79,7 @@ window.onload = function () {
     const page = Number($('#c_page').val())
     const author = $('#c_author').val()
     $.ajax({
-      url: '/graphql',
+      url: '/n/graphql',
       contentType: "application/json",
       type:'POST',
       data: JSON.stringify({
@@ -154,7 +154,7 @@ window.onload = function () {
     const sex = $('#s_sex').val()
     const age = Number($('#s_age').val())
     $.ajax({
-      url: '/graphql',
+      url: '/n/graphql',
       contentType: 'application/json',
       type:'POST',
       data: JSON.stringify({
@@ -255,7 +255,7 @@ window.onload = function () {
     // 新增
     if (isAddInfo) {
       $.ajax({
-        url: '/graphql',
+        url: '/n/graphql',
         contentType: 'application/json',
         type:'POST',
         data: JSON.stringify({
@@ -283,7 +283,7 @@ window.onload = function () {
       })
     } else { // 修改
       $.ajax({
-        url: '/graphql',
+        url: '/n/graphql',
         contentType: 'application/json',
         type:'POST',
         data: JSON.stringify({
