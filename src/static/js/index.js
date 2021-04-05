@@ -53,7 +53,7 @@ window.onload = function () {
       transform: 'translateX(-320px)'
     })
     $.ajax({
-      url: '/stu/savescourse',
+      url: '/n/stu/savescourse',
       method: 'POST',
       contentType: 'application/json',
       dataType: 'json',
@@ -130,7 +130,7 @@ window.onload = function () {
       transform: 'translateX(-320px)'
     })
     $.ajax({
-      url: '/stu/savestudent',
+      url: '/n/stu/savestudent',
       method: 'POST',
       contentType: 'application/json',
       dataType: 'json',
@@ -184,7 +184,7 @@ window.onload = function () {
   // 获取全部课程
   function getCouse () {
     $.ajax({
-      url: '/stu/course',
+      url: '/n/stu/course',
       data: {},
       success:function (res){
         if (res.success) {
@@ -196,7 +196,7 @@ window.onload = function () {
   // 获取全部学生
   function getStudent () {
     $.ajax({
-      url: '/stu/student',
+      url: '/n/stu/student',
       data: {},
       success:function (res){
         if (res.success) {
@@ -321,7 +321,7 @@ window.onload = function () {
   function getStudentInfo (id) {
     return new Promise((resolve, reject) => {
       $.ajax({
-        url: '/stu/studentInfo',
+        url: '/n/stu/studentInfo',
         data: {id: id},
         success:function (res){
           if (res.success) {
