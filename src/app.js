@@ -3,6 +3,7 @@ const app = new Koa()
 const koaBody = require('koa-body');
 const views = require('koa-views')
 const KoaStatic = require('koa-static')
+// const mount=require('koa-mount')
 const path = require('path')
 const cors = require('@koa/cors');
 const router = require('./router')
@@ -23,6 +24,7 @@ app.use(apollo.getMiddleware())
 // multipart 支持formdata
 
 app.use(async function(ctx,next){
+  console.log(ctx.path);
     next()
 })
 

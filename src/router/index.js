@@ -8,7 +8,6 @@ var product = require('./product')
 
 
 module.exports = function (app) {
-  router.prefix('/n')
   router.use(payment.routes())
   router.use(student.routes())
   router.use(product.routes())
