@@ -6,8 +6,8 @@ var StudentInfo = require('./schema/info')
 var Student = require('./schema/student')
 var Course = require('./schema/course')
 
-// const dbPath = 'mongodb://152.136.155.216:27017/product'
-const dbPath = 'mongodb://localhost:27017/product'
+const dbPath = 'mongodb://152.136.155.216:27017/product'
+// const dbPath = 'mongodb://localhost:27017/product'
 mongoose.connect(dbPath, {
   useNewUrlParser: true,
   useUnifiedTopology: true

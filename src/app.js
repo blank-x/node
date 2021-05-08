@@ -7,10 +7,46 @@ const KoaStatic = require('koa-static')
 const path = require('path')
 const cors = require('@koa/cors');
 const router = require('./router')
-const { ApolloServer } = require('apollo-server-koa')
-const { typeDefs, resolvers } = require('./graphql/schema')
-const apollo = new ApolloServer({ typeDefs, resolvers })
+const {ApolloServer} = require('apollo-server-koa')
+const {typeDefs, resolvers} = require('./graphql/schema')
+const apollo = new ApolloServer({typeDefs, resolvers})
+const errorCatch = require('./middlewares/errorCatch')
+const session = require('koa-generic-session')
+const redisStore = require('koa-redis')
+const onerror = require('koa-onerror')
+const json = require('koa-json')
+const logger = require('koa-logger')
 
+
+app.use(errorCatch)
+
+// error handler：页面显示
+let onerrorConf = {}
+if (false) {
+    onerrorConf = { redirect: '/error' }
+}
+
+onerror(app, onerrorConf)
+const { SESSION_SECRET_KEY } = require('./conf/session')
+const { REDIS_CONF } = require('./conf/redis')
+app.keys = [SESSION_SECRET_KEY]
+app.use(
+    session({
+        key: 'node.sid', //cookie name默认是'koa.sid'
+        prefix: 'node:sess:', //redis key的前缀，默认"koa:sess:"
+        cookie: {
+            path: '/',
+            httpOnly: true,
+            maxAge: 24 * 60 * 60 * 1000 //单位ms
+        },
+        store: redisStore({
+            all: `${REDIS_CONF.host}:${REDIS_CONF.port}`
+        })
+    })
+)
+
+app.use(json())
+app.use(logger())
 require('./weibo-sche')
 app.use(views(path.join(__dirname, './views'), {
   extension: 'ejs'
@@ -20,12 +56,18 @@ app.use(cors());
 app.use(koaBody({multipart: true}));
 
 router(app)
-app.use(apollo.getMiddleware())
+/*
+* 定义路径
+* */
+app.use(apollo.getMiddleware({path:'/n/graphql'}))
 // multipart 支持formdata
 
-app.use(async function(ctx,next){
+app.use(async function (ctx, next) {
   console.log(ctx.path);
-    next()
+  next()
 })
-
-app.listen(8080)
+// error-handling:打印到控制台
+app.on('error', (err, ctx) => {
+    console.error('server error', err, ctx)
+})
+app.listen(8060)

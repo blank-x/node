@@ -24,16 +24,30 @@
     "graphql": "^15.5.0",
     "koa": "^2.13.1",
     "koa-body": "^4.2.0",
+    "koa-generic-session": "^2.1.1",
+    "koa-json": "^2.0.2",
+    "koa-logger": "^3.2.1",
     "koa-mount": "^4.0.0",
+    "koa-onerror": "^4.1.0",
+    "koa-redis": "^4.0.1",
     "koa-router": "^10.0.0",
     "koa-static": "^5.0.0",
     "koa-views": "^7.0.1",
-    "mongoose": "^5.12.2"
+    "mongoose": "^5.12.2",
+    "mysql2": "^2.2.5",
+    "nodemailer": "^6.6.0",
+    "redis": "^3.1.2",
+    "sequelize": "^6.6.2"
   },
   "devDependencies": {
     "cheerio": "^1.0.0-rc.5",
     "node-schedule": "^2.0.0",
     "nodemon": "^2.0.7",
     "superagent": "^6.1.0"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "hotSearch.json"
+    ]
   }
 }
